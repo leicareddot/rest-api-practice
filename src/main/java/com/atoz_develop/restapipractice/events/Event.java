@@ -2,11 +2,14 @@ package com.atoz_develop.restapipractice.events;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Builder @AllArgsConstructor @NoArgsConstructor @Getter @Setter @EqualsAndHashCode(of = "id")
+@Entity
 public class Event {
 
+    @Id @GeneratedValue
     private Integer id;                                 // id
     private String name;                                // 이름
     private String description;                         // 설명
@@ -20,5 +23,6 @@ public class Event {
     private int limitOfEnrollment;                      // 등록 정원
     private boolean offline;                            // 오프라인 여부
     private boolean free;                               // 유무료 여부
+    @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;                    // 이벤트 상태
 }

@@ -15,12 +15,18 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @RequestMapping(value = "/api/events", produces = MediaTypes.HAL_JSON_UTF8_VALUE)
 public class EventController {
 
+    private final EventRepository eventRepository;
+
+    public EventController(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
     @PostMapping
     public ResponseEntity createEvent(@RequestBody Event event) {
-
+        Event newEvent = eventRepository.save(event);
 //        URI createdUri = linkTo(methodOn(EventController.class).createEvent(null)).slash("{id}").toUri();
-        URI createdUri = linkTo(EventController.class).slash("{id}").toUri();
-        event.setId(10);
+        URI createdUri = linkTo(EventController.class).slash(newEvent.getId()).toUri();
+
         return ResponseEntity.created(createdUri).body(event);
     }
 }
