@@ -12,8 +12,12 @@ public class EventValidator {
     public void validate(EventDto eventDto, Errors errors) {
         // maxPrice가 0인 경우에만 basePrice가 maxPrice보다 클 수 있음(경매 형태)
         if (eventDto.getBasePrice() > eventDto.getMaxPrice() && eventDto.getMaxPrice() != 0) {
-            errors.rejectValue("basePrice", "wrongValue", "BasePrice is wrong.");
-            errors.rejectValue("maxPrice", "wrongValue", "MaxPrice is wrong.");
+            // Field Error
+//            errors.rejectValue("basePrice", "wrongValue", "BasePrice is wrong.");
+//            errors.rejectValue("maxPrice", "wrongValue", "MaxPrice is wrong.");
+
+            // Global Error
+            errors.reject("wrongPrices", "Value of Prices are wrong");
         }
 
         LocalDateTime endEventDateTime = eventDto.getEndEventDateTime();

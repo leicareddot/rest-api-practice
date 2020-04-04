@@ -40,14 +40,14 @@ public class EventController {
         // JSR303 애노테이션 검증
         if(errors.hasErrors()) {
             errors.getAllErrors().forEach(System.out::println);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(errors);
         }
 
         // 데이터 검증
         eventValidator.validate(eventDto, errors);
         if(errors.hasErrors()) {
             errors.getAllErrors().forEach(System.out::println);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(errors);
         }
 
         // ModelMapper를 사용해서 DTO -> 도메인 객체 값 복사
