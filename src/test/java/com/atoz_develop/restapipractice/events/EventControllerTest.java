@@ -1,5 +1,6 @@
 package com.atoz_develop.restapipractice.events;
 
+import com.atoz_develop.restapipractice.common.TestDescription;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class EventControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @TestDescription("정상적으로 이벤트를 생성하는 테스트")
     @Test
     public void createEvent() throws Exception {
 
@@ -37,7 +39,7 @@ public class EventControllerTest {
                 .name("Spring")
                 .description("REST API Development with Spring")
                 .beginEnrollmentDateTime(LocalDateTime.of(2020, 4, 1, 12, 0))
-                .closeEnrollmentDateTime(LocalDateTime.of(2020, 4, 1, 14, 0))
+                .closeEnrollmentDateTime(LocalDateTime.of(2020, 4, 1, 12, 0))
                 .beginEventDateTime(LocalDateTime.of(2020, 4, 1, 12, 0))
                 .endEventDateTime(LocalDateTime.of(2020, 4, 1, 12, 0))
                 .basePrice(100)
@@ -64,6 +66,7 @@ public class EventControllerTest {
         ;
     }
 
+    @TestDescription("입력받을수 없는 값을 사용한 경우에 에러가 발생하는 테스트")
     @Test
     public void createEvent_Bad_Request() throws Exception {
 
@@ -92,6 +95,7 @@ public class EventControllerTest {
         ;
     }
 
+    @TestDescription("입력값이 비어있는 경우에 에러가 발생하는 테스트")
     @Test
     public void createEvent_Bad_Request_Empty_Input() throws Exception {
         EventDto eventDto = EventDto.builder().build();
@@ -103,6 +107,7 @@ public class EventControllerTest {
         ;
     }
 
+    @TestDescription("입력값이 잘못된 경우에 에러가 발생하는 테스트")
     @Test
     public void createEvent_Bad_Request_Wrong_Input() throws Exception {
 
