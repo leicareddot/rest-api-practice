@@ -25,4 +25,21 @@ public class Event {
     private boolean free;                               // 유무료 여부
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;// 이벤트 상태 - 기본값 DRAFT
+
+    public void update() {
+
+        // Update free Field
+        if (basePrice == 0 && maxPrice == 0) {
+            free = true;
+        } else {
+            free = false;
+        }
+
+        // Update offline Field
+        if (location == null || location.isBlank()) {
+            offline = false;
+        } else {
+            offline = true;
+        }
+    }
 }

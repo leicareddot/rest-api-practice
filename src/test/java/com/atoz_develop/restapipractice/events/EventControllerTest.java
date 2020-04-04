@@ -2,7 +2,6 @@ package com.atoz_develop.restapipractice.events;
 
 import com.atoz_develop.restapipractice.common.TestDescription;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +59,9 @@ public class EventControllerTest {
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_UTF8_VALUE))
 
                 // 특정 필드(id 등)는 요청 파라미터로부터 입력된 값이 저장되면 안됨
-                .andExpect(jsonPath("id").value(Matchers.not(100)))
-                .andExpect(jsonPath("free").value(Matchers.not(true)))
+                // + 비즈니스 로직 테스트
+                .andExpect(jsonPath("free").value(false))
+                .andExpect(jsonPath("offline").value(true))
                 .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()))
         ;
     }

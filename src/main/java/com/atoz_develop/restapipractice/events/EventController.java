@@ -52,6 +52,7 @@ public class EventController {
 
         // ModelMapper를 사용해서 DTO -> 도메인 객체 값 복사
         Event event = modelMapper.map(eventDto, Event.class);
+        event.update();
         Event newEvent = eventRepository.save(event);
 //        URI createdUri = linkTo(methodOn(EventController.class).createEvent(null)).slash("{id}").toUri();
         URI createdUri = linkTo(EventController.class).slash(newEvent.getId()).toUri();
