@@ -1,5 +1,6 @@
 package com.atoz_develop.restapipractice.events;
 
+import com.atoz_develop.restapipractice.common.ErrorsResource;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
@@ -42,14 +43,14 @@ public class EventController {
         // JSR303 애노테이션 검증
         if(errors.hasErrors()) {
             errors.getAllErrors().forEach(System.out::println);
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
 
         // 데이터 검증
         eventValidator.validate(eventDto, errors);
         if(errors.hasErrors()) {
             errors.getAllErrors().forEach(System.out::println);
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
 
         // ModelMapper를 사용해서 DTO -> 도메인 객체 값 복사
@@ -68,6 +69,10 @@ public class EventController {
         eventResource.add(new Link("/docs/index.html#resources-events-create").withRel("profile"));
 
         return ResponseEntity.created(createdUri).body(eventResource);
+    }
+
+    private ResponseEntity<ErrorsResource> badRequest(Errors errors) {
+        return ResponseEntity.badRequest().body(new ErrorsResource(errors));
     }
 }
 
