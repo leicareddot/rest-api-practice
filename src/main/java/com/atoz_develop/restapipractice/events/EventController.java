@@ -57,11 +57,11 @@ public class EventController {
         Event newEvent = eventRepository.save(event);
 
         ControllerLinkBuilder selfLinkBuilder = linkTo(EventController.class).slash(newEvent.getId());
+        // HTTP Response Location 헤더에 넣을 uri
         URI createdUri = selfLinkBuilder.toUri();
 
         // HATEOAS
         EventResource eventResource = new EventResource(event);
-        eventResource.add(selfLinkBuilder.withSelfRel());
         eventResource.add(selfLinkBuilder.withRel("update-event"));
         eventResource.add(linkTo(EventController.class).withRel("query-events"));
 

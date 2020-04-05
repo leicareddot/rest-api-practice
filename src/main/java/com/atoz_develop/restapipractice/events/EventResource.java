@@ -1,18 +1,16 @@
 package com.atoz_develop.restapipractice.events;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 
-public class EventResource extends ResourceSupport {
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-    @JsonUnwrapped
-    private Event event;
+public class EventResource extends Resource<Event> {
 
-    public EventResource(Event event) {
-        this.event = event;
-    }
-
-    public Event getEvent() {
-        return event;
+    public EventResource(Event event, Link... links) {
+        super(event, links);
+        // 동일
+//        add(new Link("http://localhost:8080/api/events/" + event.getId()));
+        add(linkTo(EventController.class).slash(event.getId()).withSelfRel());
     }
 }
