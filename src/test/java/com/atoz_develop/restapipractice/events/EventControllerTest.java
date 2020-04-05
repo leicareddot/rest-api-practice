@@ -78,6 +78,7 @@ public class EventControllerTest {
                 .andExpect(jsonPath("_links.self").exists()) // 현재 리소스 링크
                 .andExpect(jsonPath("_links.query-events").exists()) // 이벤트 목록 조회 링크
                 .andExpect(jsonPath("_links.update-event").exists()) // 이벤트 수정 링크
+                .andExpect(jsonPath("_links.profile").exists()) // profile 링크
 
                 // REST Docs 적용
                 .andDo(document("create-event", // snippet의 이름을 문자열로 지정
@@ -86,7 +87,8 @@ public class EventControllerTest {
                         links(
                                 linkWithRel("self").description("link to self"),
                                 linkWithRel("query-events").description("link to query events"),
-                                linkWithRel("update-event").description("link to update an existing event")
+                                linkWithRel("update-event").description("link to update an existing event"),
+                                linkWithRel("profile").description("link to API Documentation")
                         ),
                         // 요청 헤더 문서화
                         requestHeaders(
@@ -130,7 +132,8 @@ public class EventControllerTest {
                                 // 링크는 상단에서 문서화 했으므로 ignore
                                 fieldWithPath("_links.self.href").ignored(),
                                 fieldWithPath("_links.query-events.href").ignored(),
-                                fieldWithPath("_links.update-event.href").ignored()
+                                fieldWithPath("_links.update-event.href").ignored(),
+                                fieldWithPath("_links.profile.href").ignored()
                         )
                 ))
         ;
