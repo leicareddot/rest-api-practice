@@ -63,6 +63,11 @@ public class EventControllerTest {
                 .andExpect(jsonPath("free").value(false))
                 .andExpect(jsonPath("offline").value(true))
                 .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()))
+
+                // HATEOAS 링크 응답 확인
+                .andExpect(jsonPath("_links.self").exists()) // 현재 리소스 링크
+                .andExpect(jsonPath("_links.query-events").exists()) // 이벤트 목록 조회 링크
+                .andExpect(jsonPath("_links.update-event").exists()) // 이벤트 수정 링크
         ;
     }
 
