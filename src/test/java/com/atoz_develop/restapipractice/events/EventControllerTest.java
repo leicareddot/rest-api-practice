@@ -1,22 +1,12 @@
 package com.atoz_develop.restapipractice.events;
 
-import com.atoz_develop.restapipractice.common.RestDocsConfiguration;
+import com.atoz_develop.restapipractice.common.BaseControllerTest;
 import com.atoz_develop.restapipractice.common.TestDescription;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
@@ -30,19 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@AutoConfigureRestDocs
-@AutoConfigureMockMvc
-@Import(RestDocsConfiguration.class)
-@ActiveProfiles("test")
-@SpringBootTest
-public class EventControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+public class EventControllerTest extends BaseControllerTest {
 
     @TestDescription("정상적으로 이벤트를 생성하는 테스트")
     @Test
@@ -284,9 +262,6 @@ public class EventControllerTest {
                 .andExpect(status().isNotFound())   // 404
         ;
     }
-
-    @Autowired
-    ModelMapper modelMapper;
 
     @TestDescription("이벤트를 정상적으로 수정하기")
     @Test
