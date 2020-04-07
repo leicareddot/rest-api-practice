@@ -95,6 +95,37 @@ public class EventController {
         return ResponseEntity.ok(eventResource);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateEvent(@PathVariable Integer id, @RequestBody @Valid EventDto eventDto, Errors errors) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        if (optionalEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 바인딩 에러(JSR303 애노테이션) -> BadRequest
+        if (errors.hasErrors()) {
+            return badRequest(errors);
+        }
+
+        // 비즈니스 로직 검토
+        eventValidator.validate(eventDto, errors);
+        if (errors.hasErrors()) {
+            return badRequest(errors);
+        }
+
+        // 이벤트 수정
+        Event existingEvent = optionalEvent.get();
+        // 기존 event에 eventDto에 있는 값들 부어주기
+        modelMapper.map(eventDto, existingEvent);
+        // 서비스 계층을 사용하지 않으므로 명시적으로 save() 호출
+        Event savedEvent = eventRepository.save(existingEvent);
+        // Event -> EventResource
+        EventResource eventResource = new EventResource(savedEvent);
+        eventResource.add(new Link("/docs/index.html#resources-events-update").withRel("profile"));
+
+        return ResponseEntity.ok(eventResource);
+    }
+
     private ResponseEntity<ErrorsResource> badRequest(Errors errors) {
         return ResponseEntity.badRequest().body(new ErrorsResource(errors));
     }
