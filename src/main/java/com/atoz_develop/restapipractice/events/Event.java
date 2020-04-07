@@ -1,5 +1,6 @@
 package com.atoz_develop.restapipractice.events;
 
+import com.atoz_develop.restapipractice.accounts.Account;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,8 @@ public class Event {
     private boolean free;                               // 유무료 여부
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;// 이벤트 상태 - 기본값 DRAFT
+    @ManyToOne
+    private Account manager;
 
     public void update() {
 
